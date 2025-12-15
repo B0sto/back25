@@ -23,12 +23,12 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userModel.find();
+    return this.userModel.find().populate('posts');
   }
 
   async findOne(id: string) {
     if (!isValidObjectId(id)) throw new BadRequestException('invalid mongo id');
-    const findUserById = await this.userModel.findById(id);
+    const findUserById = await this.userModel.findById(id).populate('posts');
     if (!findUserById) throw new NotFoundException('not found');
     return findUserById;
   }
